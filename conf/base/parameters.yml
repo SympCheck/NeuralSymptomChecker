@@ -1,0 +1,55 @@
+# Dataset configs
+
+mz_conf:
+  dev:
+    - train
+  test:
+    - train
+    - test
+  test_l:
+    train: train
+    val: test
+    test: test
+  batch_size: 5
+  cuis_vocabulary_size: 66
+  diagn_vocabulary_size: 4
+
+dxy_conf:
+  dev:
+    - train
+  test:
+    - train
+    - test
+  test_l:
+    train: train
+    val: test
+    test: test
+  batch_size: 5
+  cuis_vocabulary_size: 41
+  diagn_vocabulary_size: 5
+
+symcat_base_conf: &symcat_base_conf
+  dev:
+    - train
+    - val
+  test:
+    - train
+    - test
+  test_l:
+    train: train
+    val: val
+    test: test
+  batch_size: 2000
+  cuis_vocabulary_size: 376
+
+symcat_200_conf:
+  <<: *symcat_base_conf
+  diagn_vocabulary_size: 200
+
+symcat_300_conf:
+  <<: *symcat_base_conf
+  diagn_vocabulary_size: 300
+
+symcat_400_conf:
+  <<: *symcat_base_conf
+  diagn_vocabulary_size: 400

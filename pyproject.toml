@@ -1,0 +1,17 @@
+[tool.kedro]
+package_name = "repo_for_article_about_symptom_checker_based_on_deep_learning_network_with_logic_regularization"
+project_name = "Repo for article about symptom checker based on deep learning network with logic regularization"
+project_version = "0.17.5"
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 88
+known_third_party = "kedro"
+
+[tool.pytest.ini_options]
+addopts = """
+--cov-report term-missing \
+--cov src/repo_for_article_about_symptom_checker_based_on_deep_learning_network_with_logic_regularization -ra"""

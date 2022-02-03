@@ -1,0 +1,332 @@
+# This is a boilerplate parameters config generated for pipeline 'symptom_checker_legacy'
+# using Kedro 0.17.5.
+#
+# Documentation for this file format can be found in "Parameters"
+# Link: https://kedro.readthedocs.io/en/0.17.5/04_kedro_project_setup/02_configuration.html#parameters
+
+
+common_conf_legacy:
+  symp_rec_threshold: 0.5
+  drop_prob: 0.5
+  num_workers: 10
+  epochs: 5
+  lr: 1e-4
+  seed: 7
+  n_last_train_batchs_for_metrics: 10
+
+
+base_sympt_checker_conf: &base_sympt_checker_conf
+  hidden_size: 5000
+  explicit_data: symptoms
+
+
+SymptomCheckerCycle: &sympt_checker_cycle_conf
+  <<: *base_sympt_checker_conf
+  max_iterations: 5
+  epochs: 1
+
+
+
+sympt_checker_hyperparams_mz:
+  hyperparams:
+    entropy_threshold:
+      suggest_method: categorical
+      params:
+        choices:
+          - 0.551
+    activ_f:
+      suggest_method: categorical
+      params:
+        choices:
+          - ReLU
+    lr:
+      suggest_method: categorical
+      params:
+        choices:
+          - 5.e-5
+    scheduler:
+      suggest_method: categorical
+      params:
+        choices:
+          - linear_schedule_with_warmup
+    epochs:
+      suggest_method: categorical
+      params:
+        choices:
+          - 35
+    num_hidden_layers:
+      suggest_method: categorical
+      params:
+        choices:
+          - 2
+    1_hidden_size:
+      suggest_method: categorical
+      params:
+        choices:
+          - 6000
+    2_hidden_size:
+      suggest_method: categorical
+      params:
+        choices:
+          - 2000
+    drop_prob:
+      suggest_method: categorical
+      params:
+        choices:
+          - 0.30000000000000004
+    symp_rec_loss_coef:
+      suggest_method: categorical
+      params:
+        choices:
+          - 1.6
+
+  metric_for_early_stopping: epoch_val_diagn_top1_acc
+  metrics_for_optimization: 
+    - name: epoch_test_diagn_top1_acc
+      direction: maximize
+
+  n_trials: 1
+  model_class_path: src/repo_for_article_about_symptom_checker_based_on_deep_learning_network_with_logic_regularization/pipelines/symptom_checker_legacy/models.py
+  max_iterations: 50
+
+
+
+
+sympt_checker_hyperparams_dxy:
+  hyperparams:
+    entropy_threshold:
+      suggest_method: categorical
+      params:
+        choices:
+          - 0.30100000000000005
+    activ_f:
+      suggest_method: categorical
+      params:
+        choices:
+          - ReLU
+    lr:
+      suggest_method: categorical
+      params:
+        choices:
+          - 0.001
+    scheduler:
+      suggest_method: categorical
+      params:
+        choices:
+          - linear_schedule_with_warmup
+    epochs:
+      suggest_method: categorical
+      params:
+        choices:
+          - 5
+    num_hidden_layers:
+      suggest_method: categorical
+      params:
+        choices:
+          - 1
+    1_hidden_size:
+      suggest_method: categorical
+      params:
+        choices:
+          - 10000
+    drop_prob:
+      suggest_method: categorical
+      params:
+        choices:
+          - 0.5
+    symp_rec_loss_coef:
+      suggest_method: categorical
+      params:
+        choices:
+          - 0.6000000000000001
+  metric_for_early_stopping: epoch_val_diagn_top1_acc
+  metrics_for_optimization: 
+    - name: epoch_test_diagn_top1_acc
+      direction: maximize
+
+  n_trials: 1
+  model_class_path: src/repo_for_article_about_symptom_checker_based_on_deep_learning_network_with_logic_regularization/pipelines/symptom_checker_legacy/models.py
+  max_iterations: 50
+
+
+
+sympt_checker_hyperparams_symcat_200:
+  hyperparams:
+    entropy_threshold:
+      suggest_method: categorical
+      params:
+        choices:
+          - 0.3
+    activ_f:
+      suggest_method: categorical
+      params:
+        choices:
+          - ReLU
+    lr:
+      suggest_method: categorical
+      params:
+        choices:
+          - 1.e-3
+    scheduler:
+      suggest_method: categorical
+      params:
+        choices:
+          - linear_schedule_with_warmup
+    epochs:
+      suggest_method: categorical
+      params:
+        choices:
+          - 5
+    num_hidden_layers:
+      suggest_method: categorical
+      params:
+        choices:
+          - 1
+    1_hidden_size:
+      suggest_method: categorical
+      params:
+        choices:
+          - 8000
+    drop_prob:
+      suggest_method: categorical
+      params:
+        choices:
+          - 0.5
+    symp_rec_loss_coef:
+      suggest_method: categorical
+      params:
+        choices:
+          - 1.0
+  metric_for_early_stopping: epoch_val_diagn_top1_acc
+  metrics_for_optimization: 
+    - name: epoch_test_diagn_top1_acc
+      direction: maximize
+
+  n_trials: 1
+  model_class_path: src/repo_for_article_about_symptom_checker_based_on_deep_learning_network_with_logic_regularization/pipelines/symptom_checker_legacy/models.py
+  max_iterations: 50
+
+
+
+sympt_checker_hyperparams_symcat_300:
+  hyperparams:
+    entropy_threshold:
+      suggest_method: categorical
+      params:
+        choices:
+          - 0.4
+    activ_f:
+      suggest_method: categorical
+      params:
+        choices:
+          - ReLU
+    lr:
+      suggest_method: categorical
+      params:
+        choices:
+          - 1.e-2
+    scheduler:
+      suggest_method: categorical
+      params:
+        choices:
+          - linear_schedule_with_warmup
+    epochs:
+      suggest_method: categorical
+      params:
+        choices:
+          - 10
+    num_hidden_layers:
+      suggest_method: categorical
+      params:
+        choices:
+          - 1
+    1_hidden_size:
+      suggest_method: categorical
+      params:
+        choices:
+          - 8000
+    drop_prob:
+      suggest_method: categorical
+      params:
+        choices:
+          - 0.5
+    symp_rec_loss_coef:
+      suggest_method: categorical
+      params:
+        choices:
+          - 1.0
+  metric_for_early_stopping: epoch_val_diagn_top1_acc
+  metrics_for_optimization: 
+    - name: epoch_test_diagn_top1_acc
+      direction: maximize
+
+  n_trials: 1
+  model_class_path: src/repo_for_article_about_symptom_checker_based_on_deep_learning_network_with_logic_regularization/pipelines/symptom_checker_legacy/models.py
+  max_iterations: 50
+
+
+
+sympt_checker_hyperparams_symcat_400:
+  hyperparams:
+    entropy_threshold:
+      suggest_method: categorical
+      params:
+        choices:
+          - 0.4
+    activ_f:
+      suggest_method: categorical
+      params:
+        choices:
+          - ReLU
+    lr:
+      suggest_method: categorical
+      params:
+        choices:
+          - 1.e-2
+    scheduler:
+      suggest_method: categorical
+      params:
+        choices:
+          - linear_schedule_with_warmup
+    epochs:
+      suggest_method: categorical
+      params:
+        choices:
+          - 10
+    num_hidden_layers:
+      suggest_method: categorical
+      params:
+        choices:
+          - 1
+    1_hidden_size:
+      suggest_method: categorical
+      params:
+        choices:
+          - 8000
+    drop_prob:
+      suggest_method: categorical
+      params:
+        choices:
+          - 0.5
+    symp_rec_loss_coef:
+      suggest_method: categorical
+      params:
+        choices:
+          - 1.0
+  metric_for_early_stopping: epoch_val_diagn_top1_acc
+  metrics_for_optimization: 
+    - name: epoch_test_diagn_top1_acc
+      direction: maximize
+
+  n_trials: 1
+  model_class_path: src/repo_for_article_about_symptom_checker_based_on_deep_learning_network_with_logic_regularization/pipelines/symptom_checker_legacy/models.py
+  max_iterations: 50
+
+
+metric_mapper:
+  epoch_test_diagn_top1_acc: Acc@1
+  epoch_test_diagn_top3_acc: Acc@3
+  epoch_test_diagn_top5_acc: Acc@5
+  epoch_test_diagn_top7_acc: Acc@7
+  epoch_test_diagn_top10_acc: Acc@10
+  epoch_test_mean_iterations_per_case: '#Steps'

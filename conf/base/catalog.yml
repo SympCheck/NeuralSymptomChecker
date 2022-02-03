@@ -1,0 +1,104 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
+
+# Processed datasets
+
+mz_train_df:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/mz_tokenized_train_df.pkl
+
+mz_test_df:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/mz_tokenized_test_df.pkl
+
+dxy_train_df:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/dxy_tokenized_train_df.pkl
+
+dxy_test_df:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/dxy_tokenized_test_df.pkl
+
+symcat_200_train_df:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/symcat_200_train_df.pkl
+
+symcat_200_val_df:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/symcat_200_val_df.pkl
+
+symcat_200_test_df:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/symcat_200_test_df.pkl
+
+symcat_300_train_df:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/symcat_300_train_df.pkl
+
+symcat_300_val_df:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/symcat_300_val_df.pkl
+
+symcat_300_test_df:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/symcat_300_test_df.pkl
+
+symcat_400_train_df:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/symcat_400_train_df.pkl
+
+symcat_400_val_df:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/symcat_400_val_df.pkl
+
+symcat_400_test_df:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/symcat_400_test_df.pkl
+
+
+# Models
+
+symptom_checker_trained_on_mz:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/symptom_checker_trained_on_mz.pkl
+
+symptom_checker_trained_on_dxy:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/symptom_checker_trained_on_dxy.pkl
+
+symptom_checker_trained_on_symcat_200:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/symptom_checker_trained_on_symcat_200.pkl
+
+symptom_checker_trained_on_symcat_300:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/symptom_checker_trained_on_symcat_300.pkl
+
+symptom_checker_trained_on_symcat_400:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/symptom_checker_trained_on_symcat_400.pkl
+
+
+# Metrics
+
+test_metrics_for_mz:
+  type: json.JSONDataSet
+  filepath: data/08_reporting/test_metrics_for_mz.json
+
+test_metrics_for_dxy:
+  type: json.JSONDataSet
+  filepath: data/08_reporting/test_metrics_for_dxy.json
+
+test_metrics_for_symcat_200:
+  type: json.JSONDataSet
+  filepath: data/08_reporting/test_metrics_for_symcat_200.json
+
+test_metrics_for_symcat_300:
+  type: json.JSONDataSet
+  filepath: data/08_reporting/test_metrics_for_symcat_300.json
+
+test_metrics_for_symcat_400:
+  type: json.JSONDataSet
+  filepath: data/08_reporting/test_metrics_for_symcat_400.json
