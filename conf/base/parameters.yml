@@ -4,9 +4,6 @@ mz_conf:
   dev:
     - train
   test:
-    - train
-    - test
-  test_l:
     train: train
     val: test
     test: test
@@ -18,9 +15,6 @@ dxy_conf:
   dev:
     - train
   test:
-    - train
-    - test
-  test_l:
     train: train
     val: test
     test: test
@@ -33,9 +27,6 @@ symcat_base_conf: &symcat_base_conf
     - train
     - val
   test:
-    - train
-    - test
-  test_l:
     train: train
     val: val
     test: test

@@ -1,4 +1,4 @@
-# Pipeline symptom_checker
+# Pipeline symptom_checker_legacy
 
 > *Note:* This is a `README.md` boilerplate generated using `Kedro 0.17.5`.
 

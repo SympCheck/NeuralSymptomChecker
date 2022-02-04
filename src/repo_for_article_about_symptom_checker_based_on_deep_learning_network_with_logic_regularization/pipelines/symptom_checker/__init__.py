@@ -26,8 +26,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-This is a boilerplate pipeline 'symptom_checker'
+This is a boilerplate pipeline 'symptom_checker_legacy'
 generated using Kedro 0.17.5
 """
 
-from .pipeline import sympt_checker
+from .pipeline import sympt_checker_model
+

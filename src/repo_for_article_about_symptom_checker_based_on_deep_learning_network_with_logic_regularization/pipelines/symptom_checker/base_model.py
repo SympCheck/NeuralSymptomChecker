@@ -37,20 +37,23 @@ class BaseModel(pl.LightningModule):
 
         mod_metrics.update(metrics)
 
+        # Добавляю lr
         optim = self.optimizers()
         if isinstance(optim, list): optim = optim[0]
         mod_metrics['lr'] = optim.param_groups[0]['lr']
 
+        # Добавляю префикс к назавниям метрик
         mod_metrics = {f'{prefix}_{name}': value for name, value in mod_metrics.items()}
 
-        mod_metrics[f'{prefix}_loss'] = loss.item()
-        mod_metrics['loss'] = loss 
+        mod_metrics[f'{prefix}_loss'] = loss.item() # добавляю значение лосса, чтобы залогировать его
+        mod_metrics['loss'] = loss # добавляю лосс как тензор, чтобы он использовался при обучении моделии
 
         return mod_metrics
 
 
     def log_metrics(self, metrics: Dict[str, float], step = None) -> Dict[str, float]:
 
+        # удаляю лосс в виде тензора, так как он не нужен для логирования
         metrics = copy.copy(metrics)
         metrics.pop('loss', None)
 
@@ -65,7 +68,7 @@ class BaseModel(pl.LightningModule):
             for metric, value in metrics.items():
                 all_metrics[metric] = all_metrics.get(metric, []) + [value]
 
-        all_metrics.pop('loss', None) 
+        all_metrics.pop('loss', None) # удаляю лосс в виде тензора, так как он не нужен для логирования
 
         epoch_metrics = {}
         for metric, values in all_metrics.items():

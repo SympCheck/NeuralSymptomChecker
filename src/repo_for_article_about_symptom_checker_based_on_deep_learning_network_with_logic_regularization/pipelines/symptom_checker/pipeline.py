@@ -27,15 +27,17 @@
 # limitations under the License.
 
 """
-This is a boilerplate pipeline 'symptom_checker'
+This is a boilerplate pipeline 'symptom_checker_legacy'
 generated using Kedro 0.17.5
 """
 
 from kedro.framework.session import get_current_session
 from kedro.pipeline import Pipeline, node
 
-from .nodes import preprocess_extra_params, conf_combination, preprocess_dataset, run_model_training
+from .nodes import run_model_tuning
+from .nodes import conf_combination, preprocess_extra_params, preprocess_dataset, postprocess_metrics
 from .nodes import SymptToSymptDataset
+
 from .models import SymptomChecker
 
 
@@ -56,11 +58,12 @@ def dataset_processing_pipeline(dataset_name, conf_name, dataset_class, ds_mode,
     ])
 
 
-def base_model_training_pipeline(model_class, 
+def base_model_tuning_pipeline(model_class, 
                                 model_name,
                                 dataset_class,
                                 common_conf_name,
                                 architectire_conf_name,
+                                tuning_conf_name,
                                 **kwargs):
 
     session = get_current_session()
@@ -69,7 +72,13 @@ def base_model_training_pipeline(model_class,
     ds_name = context.params['ds_name']
     mode = context.params['mode']
 
-    actual_configs = [common_conf_name, f'params:{ds_name}_conf', f'{architectire_conf_name}_{ds_name}_conf']
+
+    actual_configs = [
+        common_conf_name, 
+        f'params:{ds_name}_conf', 
+        architectire_conf_name, 
+        f'params:{tuning_conf_name}_{ds_name}'
+    ]
     all_configs = {'actual_configs': 'actual_configs'}
     all_configs.update(preprocess_extra_params(actual_configs, context))
 
@@ -88,47 +97,54 @@ def base_model_training_pipeline(model_class,
         ),
     ])
 
-    training_model_inputs = {'model': 'model', 'conf': 'conf', 'device': 'params:device', 'dataset_name': 'params:ds_name'}
-    ds_modes = context.params[f'{ds_name}_conf'][mode]
-    for ds_mode in ds_modes:
-        pipe += dataset_processing_pipeline(f'{ds_name}_{ds_mode}_df', 'conf', dataset_class, ds_mode, **kwargs)
-        training_model_inputs[f'{ds_mode}_dataset'] = f'{ds_mode}_dataset'
+    training_model_inputs = {
+        'experiment_name': 'experiment_name', 
+        'model_class': 'model_class', 
+        'conf': 'conf', 
+        'device': 'params:device', 
+        'dataset_name': 'params:ds_name'
+    }
 
-    if context.params.get('load_from_pretrained', False):
-        pipe += Pipeline([
-            node(
-                func=lambda model: model,
-                inputs=f'{model_name}_trained_on_{ds_name}',
-                outputs='model',
-                name='model_load'
-            ),
-        ])
-    else:
-        pipe += Pipeline([
-            node(
-                func=model_class,
-                inputs='conf',
-                outputs='model',
-                name='model_init'
-            ),
-        ])
+    ds_modes = context.params[f'{ds_name}_conf'][mode]
+    for mode_name, ds_mode in ds_modes.items():
+        pipe += dataset_processing_pipeline(f'{ds_name}_{ds_mode}_df', 'conf', dataset_class, mode_name, **kwargs)
+        training_model_inputs[f'{mode_name}_dataset'] = f'{mode_name}_dataset'
 
     pipe += Pipeline([
         node(
-            func=run_model_training,
+            func=lambda: model_class,
+            inputs=None,
+            outputs='model_class',
+            name='model_class'
+        ),
+        node(
+            func=lambda: f'{model_name}_trained_on_{ds_name}',
+            inputs=None,
+            outputs='experiment_name',
+            name='experiment_name'
+        ),
+        node(
+            func=run_model_tuning,
             inputs=training_model_inputs,
-            outputs=f'{model_name}_trained_on_{ds_name}',
+            outputs=[f'{model_name}_trained_on_{ds_name}', 'metrics'],
             name='training_model'
+        ),
+        node(
+            func=postprocess_metrics,
+            inputs=['metrics', 'params:metric_mapper'],
+            outputs=f'test_metrics_for_{ds_name}',
+            name='postprocess_metrics'
         )
     ])
 
     return pipe
 
 
-def sympt_checker(**kwargs):
-    return base_model_training_pipeline(SymptomChecker,
-                                        'sympt_checker_model',
+def sympt_checker_model(**kwargs):
+    return base_model_tuning_pipeline(SymptomChecker,
+                                        'symptom_checker',
                                         SymptToSymptDataset,
                                         'params:common_conf',
-                                        'params:SymptomChecker',
+                                        'params:SymptomCheckerCycle',
+                                        'sympt_checker_hyperparams',
                                         **kwargs)

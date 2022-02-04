@@ -32,7 +32,6 @@ from typing import Dict
 from kedro.pipeline import Pipeline
 
 from repo_for_article_about_symptom_checker_based_on_deep_learning_network_with_logic_regularization.pipelines import symptom_checker as sch
-from repo_for_article_about_symptom_checker_based_on_deep_learning_network_with_logic_regularization.pipelines import symptom_checker_legacy as schl
 
 
 def register_pipelines() -> Dict[str, Pipeline]:
@@ -43,6 +42,5 @@ def register_pipelines() -> Dict[str, Pipeline]:
     """
     return {
         "__default__": Pipeline([]),
-        "symptom_checker": sch.sympt_checker(),
-        "symptom_checker_l": schl.sympt_checker_legacy_model()
+        "symptom_checker": sch.sympt_checker_model(),
     }
