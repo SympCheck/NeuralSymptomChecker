@@ -10,7 +10,7 @@ To reproduce these results, follow the steps described below.
 
 ## 2. Environment
 
-Create an isolated environment with venv or conda. Install the dependencies listed in the src/requirements.txt
+Create an isolated environment with venv or conda using python==3.7.10. Install the dependencies listed in the src/requirements.txt
 
 ## 3. Download datasets
 
